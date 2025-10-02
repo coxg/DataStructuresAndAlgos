@@ -6,7 +6,7 @@ class Heap:
             self.push(value)
 
     def __str__(self):
-        return str(self._data)
+        return repr(self._data)
 
     def __len__(self):
         return len(self._data)

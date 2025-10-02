@@ -52,7 +52,14 @@ class HashMap:
         return self._count
 
     def __str__(self):
-        return "{" + ", ".join(str(key) + ": " + str(value) for key, value in zip(self.keys, self.values)) + "}"
+        return "{" + ", ".join(repr(key) + ": " + repr(value) for key, value in zip(self.keys, self.values)) + "}"
+
+    def __contains__(self, item):
+        try:
+            self._get_index(item)
+            return True
+        except KeyError:
+            return False
 
     def _get_index(self, key):
         for offset in range(len(self._keys)):
@@ -83,19 +90,19 @@ class HashMap:
         return [value for key, value in zip(self._keys, self._values) if key not in (Unallocated(), Tombstone())]
 
 if __name__ == "__main__":
-    hashMap = HashMap()
-    hashMap[1] = 2
-    assert hashMap.keys == [1]
-    assert hashMap.values == [2]
-    assert hashMap[1] == 2
+    hash_map = HashMap()
+    hash_map[1] = 2
+    assert hash_map.keys == [1]
+    assert hash_map.values == [2]
+    assert hash_map[1] == 2
 
-    hashMap[1] = 3
-    assert hashMap.values == [3]
-    assert hashMap[1] == 3
+    hash_map[1] = 3
+    assert hash_map.values == [3]
+    assert hash_map[1] == 3
 
-    hashMap["test"] = "success"
-    assert hashMap["test"] == "success"
+    hash_map["test"] = "success"
+    assert hash_map["test"] == "success"
 
-    del hashMap[1]
-    assert hashMap.keys == ["test"]
-    assert hashMap.values == ["success"]
+    del hash_map[1]
+    assert hash_map.keys == ["test"]
+    assert hash_map.values == ["success"]

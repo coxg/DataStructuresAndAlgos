@@ -1,6 +1,7 @@
 class Node:
-    def __init__(self, value, next_node):
+    def __init__(self, value, prior_node, next_node):
         self.value = value
+        self.prior_node = prior_node
         self.next_node = next_node
 
 
@@ -19,7 +20,7 @@ class LinkedList:
             current = current.next_node
 
     def __str__(self):
-        return "[" + ", ".join(str(elem) for elem in self) + "]"
+        return "[" + ", ".join(repr(elem) for elem in self) + "]"
 
     def reverse(self):
         previous = None
@@ -33,14 +34,18 @@ class LinkedList:
         self.head, self.tail = self.tail, self.head
 
     def add_first(self, element):
-        node = Node(element, self.head)
+        node = Node(element, None, self.head)
+        if self.head:
+            self.head.prior_node = node
         self.head = node
 
         if not self.tail:
             self.tail = node
 
+        return node
+
     def add_last(self, element):
-        node = Node(element, None)
+        node = Node(element, self.tail, None)
         if self.tail:
             self.tail.next_node = node
         self.tail = node
@@ -48,19 +53,21 @@ class LinkedList:
         if not self.head:
             self.head = node
 
+        return node
+
 
 if __name__ == "__main__":
-    myLinkedList = LinkedList(1, 2, 3, 4, 5)
-    assert str(myLinkedList) == "[1, 2, 3, 4, 5]"
+    linked_list = LinkedList(1, 2, 3, 4, 5)
+    assert str(linked_list) == "[1, 2, 3, 4, 5]"
 
-    myLinkedList.reverse()
-    assert str(myLinkedList) == "[5, 4, 3, 2, 1]"
+    linked_list.reverse()
+    assert str(linked_list) == "[5, 4, 3, 2, 1]"
 
-    myLinkedList.reverse()
-    assert str(myLinkedList) == "[1, 2, 3, 4, 5]"
+    linked_list.reverse()
+    assert str(linked_list) == "[1, 2, 3, 4, 5]"
 
-    myLinkedList.add_last(6)
-    assert str(myLinkedList) == "[1, 2, 3, 4, 5, 6]"
+    linked_list.add_last(6)
+    assert str(linked_list) == "[1, 2, 3, 4, 5, 6]"
 
-    myLinkedList.add_first(0)
-    assert str(myLinkedList) == "[0, 1, 2, 3, 4, 5, 6]"
+    linked_list.add_first(0)
+    assert str(linked_list) == "[0, 1, 2, 3, 4, 5, 6]"
