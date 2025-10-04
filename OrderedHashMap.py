@@ -1,5 +1,5 @@
-from LinkedList import LinkedList
-from HashMap import HashMap
+from linkedlist import LinkedList
+from hashmap import HashMap
 
 class OrderedHashMap:
 
