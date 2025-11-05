@@ -1,7 +1,7 @@
 def binary_search(l: list[int], v: int) -> int:
     left = 0
     right = len(l) - 1
-    while left < right:
+    while left <= right:
         center = (left + right) // 2
         if l[center] < v:
             left = center + 1
